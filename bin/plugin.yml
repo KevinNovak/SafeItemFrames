@@ -1,0 +1,5 @@
+name: SafeItemFrames
+version: 1.0.0
+main: me.kevinnovak.safeitemframes.SafeItemFrames
+author: KevinNovak
+description: Protect item frames!

@@ -1,0 +1,3 @@
+protect item frames and armour stands
+do not allow item to pop out if block is surrounding it in 2 dimensions
+error message
