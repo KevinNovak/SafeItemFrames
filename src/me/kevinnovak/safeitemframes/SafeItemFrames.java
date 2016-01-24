@@ -7,7 +7,8 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class SafeItemFrames extends JavaPlugin implements Listener{
@@ -39,15 +40,20 @@ public class SafeItemFrames extends JavaPlugin implements Listener{
     }
     
     // ======================
-    // Clicking with Item
+    // Return Item
     // ======================
     @EventHandler
-    public void interact(PlayerInteractEntityEvent event) {
-        Player player = event.getPlayer();
-        Entity entity = event.getRightClicked();
-        if(entity instanceof ItemFrame) {
-            ItemFrame itemframe = (ItemFrame) entity;
-            player.getInventory().addItem(itemframe.getItem());
+    public void interact(EntityDamageByEntityEvent event) {
+        Entity damager = event.getDamager();
+        if(damager instanceof Player) {
+            Player player = (Player) damager;
+            Entity entity = event.getEntity();
+            if(entity instanceof ItemFrame) {
+                ItemFrame itemframe = (ItemFrame) entity;
+                ItemStack itemToGive = itemframe.getItem();
+                itemframe.setItem(null);
+                player.getInventory().addItem(itemToGive);
+            }
         }
     }
 }
