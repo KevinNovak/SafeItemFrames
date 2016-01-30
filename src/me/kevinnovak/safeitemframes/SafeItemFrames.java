@@ -54,6 +54,29 @@ public class SafeItemFrames extends JavaPlugin implements Listener{
     }
     
     // ======================
+    // Whose frame is this?
+    // ======================
+    String whoseFrame(Location itemFrameLocation) {
+        String itemFrameWorld = itemFrameLocation.getWorld().getName();
+        int itemFrameX = itemFrameLocation.getBlockX();
+        int itemFrameY = itemFrameLocation.getBlockY();
+        int itemFrameZ = itemFrameLocation.getBlockZ();
+        
+        String toSearch = itemFrameX + ":" + itemFrameY + ":" + itemFrameZ;
+        
+        List<String> configList = frameData.getStringList(itemFrameWorld);
+        
+        for (String string : configList) {
+            if (string.contains(toSearch)) {
+                String[] frameString = string.split(":");
+                return frameString[0];
+            }
+        }
+        return null;
+    }
+    
+    
+    // ======================
     // Return Item
     // ======================
     @EventHandler
@@ -66,48 +89,26 @@ public class SafeItemFrames extends JavaPlugin implements Listener{
             }
             
             Player player = (Player) event.getDamager();
-            
             Location itemFrameLocation = entity.getLocation();
             
-            String itemFrameWorld = itemFrameLocation.getWorld().getName();
-            int itemFrameX = itemFrameLocation.getBlockX();
-            int itemFrameY = itemFrameLocation.getBlockY();
-            int itemFrameZ = itemFrameLocation.getBlockZ();
-            
-            String toSearch = itemFrameX + ":" + itemFrameY + ":" + itemFrameZ;
-            
-            List<String> configList = frameData.getStringList(itemFrameWorld);
-            
-            for (String string : configList) {
-                if (string.contains(toSearch)) {
-                    if (!string.contains(player.getName())) {
-                        event.setCancelled(true);
-                        String[] frameString = string.split(":");
-                        player.sendMessage(convertedLang("notYours").replace("{PLAYER}", frameString[0]));
-                    } else {
-                        ItemFrame itemframe = (ItemFrame) entity;
-                        ItemStack itemToGive = itemframe.getItem();
-                        itemframe.setItem(null);
-                        player.getInventory().addItem(itemToGive);
-                    }
-                }
+            if (whoseFrame(itemFrameLocation) == null) {
+                return;
             }
+            
+            String owner = whoseFrame(itemFrameLocation);
+            if (!(owner.equalsIgnoreCase(player.getName()))) {
+                player.sendMessage("Owner: " + owner + ".");
+                player.sendMessage("Interacter: " + player.getName() + ".");
+                event.setCancelled(true);
+                player.sendMessage(convertedLang("notYours").replace("{PLAYER}", owner));
+                return;
+            }
+            
+            ItemFrame itemframe = (ItemFrame) entity;
+            ItemStack itemToGive = itemframe.getItem();
+            itemframe.setItem(null);
+            player.getInventory().addItem(itemToGive); 
         }
-        
-        
-        
-        
-//        Entity damager = event.getDamager();
-//        if(damager instanceof Player) {
-//            Player player = (Player) damager;
-//            Entity entity = event.getEntity();
-//            if(entity instanceof ItemFrame) {
-//                ItemFrame itemframe = (ItemFrame) entity;
-//                ItemStack itemToGive = itemframe.getItem();
-//                itemframe.setItem(null);
-//                player.getInventory().addItem(itemToGive);
-//            }
-//        }
     }
     
     // ===========================
@@ -162,26 +163,19 @@ public class SafeItemFrames extends JavaPlugin implements Listener{
             }
             
             Player player = (Player) event.getRemover();
-            
             Location itemFrameLocation = entity.getLocation();
             
-            String itemFrameWorld = itemFrameLocation.getWorld().getName();
-            int itemFrameX = itemFrameLocation.getBlockX();
-            int itemFrameY = itemFrameLocation.getBlockY();
-            int itemFrameZ = itemFrameLocation.getBlockZ();
+            if (whoseFrame(itemFrameLocation) == null) {
+                return;
+            }
             
-            String toSearch = itemFrameX + ":" + itemFrameY + ":" + itemFrameZ;
-            
-            List<String> configList = frameData.getStringList(itemFrameWorld);
-            
-            for (String string : configList) {
-                if (string.contains(toSearch)) {
-                    if (!string.contains(player.getName())) {
-                        event.setCancelled(true);
-                        String[] frameString = string.split(":");
-                        player.sendMessage(convertedLang("notYours").replace("{PLAYER}", frameString[0]));
-                    }
-                }
+            String owner = whoseFrame(itemFrameLocation);
+            if (!(owner.equalsIgnoreCase(player.getName()))) {
+                player.sendMessage("Owner: " + owner + ".");
+                player.sendMessage("Interacter: " + player.getName() + ".");
+                event.setCancelled(true);
+                player.sendMessage(convertedLang("notYours").replace("{PLAYER}", owner));
+                return;
             }
         }
     }
