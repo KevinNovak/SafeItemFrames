@@ -1,1 +1,3 @@
 metrics: true
+
+notYours: '&cThis item frame belongs to {PLAYER}!'
