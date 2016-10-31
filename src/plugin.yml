@@ -1,5 +1,5 @@
 name: SafeItemFrames
-version: 1.0.0
+version: 1.0.1
 main: me.kevinnovak.safeitemframes.SafeItemFrames
 author: KevinNovak
-description: Protect item frames!
+description: Fixes a glitch in Minecraft 1.8 or earlier where item frame items disappear.
