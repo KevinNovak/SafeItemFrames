@@ -9,10 +9,3 @@
 # Viewable at http://mcstats.org/plugin/SafeItemFrames/
 # default: metrics: true
 metrics: true
-
-# ============================================
-# Language
-# ============================================
-# for notYours, place the variable "{PLAYER}" where you would like the player name.
-# default: notYours: '&cThis item frame belongs to {PLAYER}!'
-notYours: '&cThis item frame belongs to {PLAYER}!'
