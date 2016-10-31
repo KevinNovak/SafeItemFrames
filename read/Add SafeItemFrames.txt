@@ -1,9 +1,0 @@
-protect item frames and armour stands
-do not allow item to pop out if block is surrounding it in 2 dimensions
-error message
-remove test message eventually
-remove name from list if its their frame
-stop from breaking by natural causes
-stop by breaking from other entities
-stop by breaking from explosions
-prevent item frame item turning if not theirs
