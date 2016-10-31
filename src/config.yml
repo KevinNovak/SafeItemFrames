@@ -1,3 +1,18 @@
+# Configuration file for SafeItemFrames
+# https://www.spigotmc.org/resources/safeitemframes.17351/
+# Created by KevinNovak
+
+# ============================================
+# Metrics
+# ============================================
+# Whether or not to collect data on plugin usage
+# Viewable at http://mcstats.org/plugin/SafeItemFrames/
+# default: metrics: true
 metrics: true
 
+# ============================================
+# Language
+# ============================================
+# for notYours, place the variable "{PLAYER}" where you would like the player name.
+# default: notYours: '&cThis item frame belongs to {PLAYER}!'
 notYours: '&cThis item frame belongs to {PLAYER}!'
